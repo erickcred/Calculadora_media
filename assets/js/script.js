@@ -2,6 +2,7 @@ const form = document.getElementById("form-atividade");
 const mensagem = document.getElementById("nome-mensagem");
 let nomeAtividade = document.getElementById("nome-atividade");
 let notaAtividade = document.getElementById("nota");
+let mediaAprovacao = prompt("Informe qual a Média para aprovação!");
 let medias = new Array;
 
 form.addEventListener("submit", (event) => {
@@ -26,7 +27,7 @@ function criaLinha() {
     tdNota.textContent = notaAtividade.value;
     tdEmoji.appendChild(imgEmoji);
 
-    apresentaEmoji(parseInt(notaAtividade.value), imgEmoji);
+    apresentaEmoji(parseFloat(notaAtividade.value), imgEmoji);
 
     medias.push(notaAtividade.value);
 
@@ -43,21 +44,21 @@ function calculaMedia() {
     }
     resultado = resultado / medias.length;
 
-    apresentaMedia(resultado);
-    aprovado(resultado);
+    apresentaMedia(parseFloat(resultado));
+    aprovado(parseFloat(resultado));
 }
 
 function apresentaEmoji(nota, imagem) {
-    imagem.src = nota >= 7 ? "./assets/image/aprovado.png" : "./assets/image/reprovado.png";
-    imagem.alt = nota >= 7 ? "Emoji festejando" : "Emoji triste";
+    imagem.src = nota >= mediaAprovacao ? "./assets/image/aprovado.png" : "./assets/image/reprovado.png";
+    imagem.alt = nota >= mediaAprovacao ? "Emoji festejando" : "Emoji triste";
 }
 
 function aprovado(media) {
     let tdAprovado = document.getElementById("resultado-valor");
 
-    tdAprovado.innerHTML = media >= 7 ? "Aprovado" : "Reprovado";
-    tdAprovado.classList.add(media >= 7 ? "aprovado" : "reprovado");
-    tdAprovado.classList.remove(media >= 7 ? "reprovado" : "aprovado");
+    tdAprovado.innerHTML = media >= mediaAprovacao ? "Aprovado" : "Reprovado";
+    tdAprovado.classList.add(media >= mediaAprovacao ? "aprovado" : "reprovado");
+    tdAprovado.classList.remove(media >= mediaAprovacao ? "reprovado" : "aprovado");
 }
 
 function apresentaMedia(media) {
